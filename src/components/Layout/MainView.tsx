@@ -1,6 +1,6 @@
-import React from 'react'
-import StatList from '../Stat/StatList'
-import ExampleDay from './ExampleDay'
+import React from 'react';
+import StatList from '../Stat/StatList';
+import ExampleDay from './ExampleDay';
 
 const MainView = () => {
   return (
@@ -58,7 +58,7 @@ const MainView = () => {
         ]}
       />
     </div>
-  )
-}
+  );
+};
 
-export default MainView
+export default MainView;

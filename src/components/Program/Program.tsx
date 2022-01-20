@@ -1,12 +1,12 @@
-import React from 'react'
-import { CompiledProgram } from '../../api'
+import React from 'react';
+import { CompiledProgram } from '../../api';
 
 type IProps = {
-  program: CompiledProgram
-}
+  program: CompiledProgram;
+};
 
 const Program = ({ program }: IProps) => {
-  return <div></div>
-}
+  return <div></div>;
+};
 
-export default Program
+export default Program;
