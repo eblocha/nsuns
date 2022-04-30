@@ -13,7 +13,6 @@ const Stat = (props: IProps) => {
       if (e.target.value === props.value.toString()) {
         return;
       }
-      console.log(e.target.value);
       const keep =
         !!props.onEdit && props.onEdit(props.id, e.target.value || '');
       if (!keep) {
