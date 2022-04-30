@@ -3,6 +3,7 @@ import useDay from '../../hooks/useDay';
 import MaxStats from '../Stat/MaxStats';
 import RepStats from '../Stat/RepStats';
 import CurrentDay from './CurrentDay';
+import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
 
 const MainView = () => {
   const [day, setDay] = useDay();
@@ -20,16 +21,20 @@ const MainView = () => {
       <div className="flex flex-row items-center overflow-hidden">
         <div className="pr-3">
           <button
-            className="w-12 h-12 rounded-full bg-gray-500 m-0.5"
+            className="w-12 h-12 rounded-full bg-gray-500 m-0.5 flex items-center justify-center"
             onClick={decrement}
-          ></button>
+          >
+            <FaArrowLeft />
+          </button>
         </div>
         <CurrentDay />
         <div className="pl-3">
           <button
-            className="w-12 h-12 rounded-full bg-gray-500 m-0.5"
+            className="w-12 h-12 rounded-full bg-gray-500 m-0.5 flex items-center justify-center"
             onClick={increment}
-          ></button>
+          >
+            <FaArrowRight />
+          </button>
         </div>
       </div>
       <MaxStats />

@@ -40,10 +40,14 @@ export const addMaxes = async (profile: string, maxes: Maxes) => {
 export const updateMaxes = async (profile: string, maxes: Maxes) => {
   const api = createApi(profile);
   return await lock.withExclusive(Keys.MAXES, async () => {
-    const current = (await api.getItem<Maxes[]>(Keys.MAXES)) || [];
-    if (!current.length) return current;
+    let current = (await api.getItem<Maxes[]>(Keys.MAXES)) || [];
+    if (!current.length) {
+      current = [maxes];
+    }
 
-    current[current.length - 1] = maxes;
+    const latest = current[current.length - 1];
+
+    current[current.length - 1] = { ...latest, ...maxes };
     await api.setItem(Keys.MAXES, current);
     return current;
   });

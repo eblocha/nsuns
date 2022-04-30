@@ -1,4 +1,4 @@
-import { DataWithHistory, Units } from '../api';
+import { DataWithHistory, LiftTypes, Program, Units } from '../api';
 import { capitalize } from './string';
 
 export const calculateUpdate = (reps: number | null, units: Units) => {
@@ -12,19 +12,21 @@ export const calculateUpdate = (reps: number | null, units: Units) => {
 };
 
 export const flatten = (
+  program: Program,
   history: Record<string, number | null>[]
 ): DataWithHistory[] => {
   const data: Record<string, DataWithHistory> = {};
-  const uniques: Set<string> = new Set();
 
-  for (const checkpoint of history) {
-    for (const key in checkpoint) {
-      uniques.add(key);
-      data[key] = {
-        title: capitalize(key),
-        value: 0,
-        history: [],
-      };
+  for (const day of Object.values(program)) {
+    for (const lift of day) {
+      if (lift.type === LiftTypes.MAIN && !(lift.base in data)) {
+        data[lift.base] = {
+          title: capitalize(lift.base),
+          value: '',
+          id: lift.base,
+          history: [],
+        };
+      }
     }
   }
 

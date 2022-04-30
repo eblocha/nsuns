@@ -69,6 +69,7 @@ export type Reps = {
 };
 
 export type StatData = {
+  id: string;
   title: string;
   value: string | number;
 };

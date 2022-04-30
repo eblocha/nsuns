@@ -31,10 +31,14 @@ export const addReps = async (profile: string, reps: Reps) => {
 export const updateReps = async (profile: string, reps: Reps) => {
   const api = createApi(profile);
   return await lock.withExclusive(Keys.REPS, async () => {
-    const current = (await api.getItem<Reps[]>(Keys.REPS)) || [];
-    if (!current.length) return current;
+    let current = (await api.getItem<Reps[]>(Keys.REPS)) || [];
+    if (!current.length) {
+      current = [reps];
+    }
 
-    current[current.length - 1] = reps;
+    const latest = current[current.length - 1];
+
+    current[current.length - 1] = { ...latest, ...reps };
     await api.setItem(Keys.REPS, current);
     return current;
   });

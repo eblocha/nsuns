@@ -6,6 +6,7 @@ import Stat from './Stat';
 type IProps = {
   title: string;
   stats: DataWithHistory[];
+  onEdit?: (id: string, value: string) => boolean;
 };
 
 const StatList = (props: IProps) => {
@@ -15,7 +16,7 @@ const StatList = (props: IProps) => {
       <div className="flex flex-col overflow-y-auto grow">
         {props.stats.map((stat) => (
           <div className="flex flex-row py-2 grow-0" key={stat.title}>
-            <Stat {...stat} />
+            <Stat {...stat} onEdit={props.onEdit} />
             <div className="px-2">
               <Sparklines data={stat.history || []}>
                 <SparklinesLine

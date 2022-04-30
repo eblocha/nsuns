@@ -1,18 +1,38 @@
+import { useCallback } from 'react';
 import { useMemo } from 'react';
-import useMaxes from '../../hooks/useMaxes';
+import useMaxes, { useUpdateMaxes } from '../../hooks/useMaxes';
 import useProfile from '../../hooks/useProfile';
+import useProgram from '../../hooks/useProgram';
 import { flatten } from '../../utils/maxes';
 import StatList from './StatList';
 
 const MaxStats = () => {
   const [profile] = useProfile();
   const { data: maxes } = useMaxes(profile);
+  const { data: program } = useProgram(profile);
 
   const flattened = useMemo(() => {
-    return maxes ? flatten(maxes) : [];
-  }, [maxes]);
+    return maxes && program ? flatten(program, maxes) : [];
+  }, [maxes, program]);
 
-  return <StatList stats={flattened} title="Maxes" />;
+  const { mutate } = useUpdateMaxes(profile);
+
+  const onEdit = useCallback(
+    (id: string, value: string): boolean => {
+      const newMax = parseInt(value);
+      if (isNaN(newMax)) {
+        return false;
+      }
+      mutate({
+        [id]: newMax,
+      });
+
+      return true;
+    },
+    [mutate]
+  );
+
+  return <StatList stats={flattened} title="Maxes" onEdit={onEdit} />;
 };
 
 export default MaxStats;
