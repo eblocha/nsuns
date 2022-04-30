@@ -117,6 +117,10 @@ const fullName = (
   return (includeName ? `${lift.name} ` : '') + displaySet(set);
 };
 
+/**
+ * displayArbitrarySet will convert a set index to a string for display
+ * It will roll over the lift/set index if needed
+ */
 export const displayArbitrarySet = ({
   program,
   maxes,
@@ -126,12 +130,19 @@ export const displayArbitrarySet = ({
   units,
   includeName = true,
 }: {
+  /** The user's program */
   program: Program;
+  /** The latest maxes */
   maxes: Maxes;
+  /** index of the current day */
   day: number;
+  /** current lift index */
   lift: number;
+  /** current set index */
   set: number;
+  /** which units the user has selected */
   units: Units;
+  /** include the name of the lift in the string */
   includeName?: boolean;
 }) => {
   [lift, set] = rolloverSet(program, day, lift, set);
