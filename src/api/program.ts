@@ -61,7 +61,7 @@ export const createDefaultProgram = (): Program => ({
         { reps: 7, percentage: 0.7, id: '4' },
         { reps: 4, percentage: 0.7, id: '5' },
         { reps: 6, percentage: 0.7, id: '6' },
-        { reps: 8, percentage: 0.7, id: '7' },
+        { reps: '8+', percentage: 0.7, id: '7' },
       ],
     },
     {
@@ -80,7 +80,7 @@ export const createDefaultProgram = (): Program => ({
       sets: [
         { reps: 5, percentage: 0.75, id: '0' },
         { reps: 3, percentage: 0.85, id: '1' },
-        { reps: 1, percentage: 0.95, id: '2' },
+        { reps: '1+', percentage: 0.95, id: '2' },
         { reps: 3, percentage: 0.9, id: '3' },
         { reps: 3, percentage: 0.85, id: '4' },
         { reps: 3, percentage: 0.8, id: '5' },
@@ -102,7 +102,7 @@ export const createDefaultProgram = (): Program => ({
         { reps: 7, percentage: 0.7, id: '4' },
         { reps: 4, percentage: 0.7, id: '5' },
         { reps: 6, percentage: 0.7, id: '6' },
-        { reps: 8, percentage: 0.7, id: '7' },
+        { reps: '8+', percentage: 0.7, id: '7' },
       ],
     },
     {
@@ -121,7 +121,7 @@ export const createDefaultProgram = (): Program => ({
       sets: [
         { reps: 5, percentage: 0.75, id: '0' },
         { reps: 3, percentage: 0.85, id: '1' },
-        { reps: 1, percentage: 0.95, id: '2' },
+        { reps: '1+', percentage: 0.95, id: '2' },
         { reps: 3, percentage: 0.9, id: '3' },
         { reps: 3, percentage: 0.85, id: '4' },
         { reps: 3, percentage: 0.8, id: '5' },
@@ -143,7 +143,7 @@ export const createDefaultProgram = (): Program => ({
         { reps: 7, percentage: 0.7, id: '4' },
         { reps: 4, percentage: 0.7, id: '5' },
         { reps: 6, percentage: 0.7, id: '6' },
-        { reps: 8, percentage: 0.7, id: '7' },
+        { reps: '8+', percentage: 0.7, id: '7' },
       ],
     },
     {
@@ -162,7 +162,7 @@ export const createDefaultProgram = (): Program => ({
       sets: [
         { reps: 5, percentage: 0.75, id: '0' },
         { reps: 3, percentage: 0.85, id: '1' },
-        { reps: 1, percentage: 0.95, id: '2' },
+        { reps: '1+', percentage: 0.95, id: '2' },
         { reps: 3, percentage: 0.9, id: '3' },
         { reps: 3, percentage: 0.85, id: '4' },
         { reps: 3, percentage: 0.8, id: '5' },
@@ -184,7 +184,7 @@ export const createDefaultProgram = (): Program => ({
         { reps: 7, percentage: 0.7, id: '4' },
         { reps: 4, percentage: 0.7, id: '5' },
         { reps: 6, percentage: 0.7, id: '6' },
-        { reps: 8, percentage: 0.7, id: '7' },
+        { reps: '8+', percentage: 0.7, id: '7' },
       ],
     },
     {
@@ -203,7 +203,7 @@ export const createDefaultProgram = (): Program => ({
       sets: [
         { reps: 5, percentage: 0.75, id: '0' },
         { reps: 3, percentage: 0.85, id: '1' },
-        { reps: 1, percentage: 0.95, id: '2' },
+        { reps: '1+', percentage: 0.95, id: '2' },
         { reps: 3, percentage: 0.9, id: '3' },
         { reps: 5, percentage: 0.85, id: '4' },
         { reps: 3, percentage: 0.8, id: '5' },
@@ -225,7 +225,7 @@ export const createDefaultProgram = (): Program => ({
         { reps: 7, percentage: 0.6, id: '4' },
         { reps: 4, percentage: 0.6, id: '5' },
         { reps: 6, percentage: 0.6, id: '6' },
-        { reps: 8, percentage: 0.6, id: '7' },
+        { reps: '8+', percentage: 0.6, id: '7' },
       ],
     },
     {

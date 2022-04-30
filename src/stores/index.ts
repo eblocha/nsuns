@@ -2,7 +2,7 @@ import create from 'zustand';
 import { devtools } from 'zustand/middleware';
 import { Day, Program, Units } from '../api';
 import { getBestDay, today } from '../utils/days';
-import { currentDay, currentLift } from '../utils/program';
+import { currentDay, currentLift, rolloverSet } from '../utils/program';
 
 export type GoToInput = {
   type: string;
@@ -59,22 +59,14 @@ const useStore = create<Store>(
         // Voice intents ------------------------------------------------------------
         nextSet: (program) => {
           const state = get();
-          const nSets =
-            currentLift(program, state.day, state.activeLift)?.sets?.length ||
-            0;
-          const nLifts = currentDay(program, state.day)?.length || 0;
-          if (state.activeSet + 1 >= nSets) {
-            if (state.activeLift + 1 >= nLifts) {
-              // done for today
-            } else {
-              // Go to next lift and reset set count
-              state.setActiveSet(0);
-              state.setActiveLift(state.activeLift + 1);
-            }
-          } else {
-            // Not done with this lift yet
-            state.setActiveSet(state.activeSet + 1);
-          }
+          const [lift, set] = rolloverSet(
+            program,
+            state.day,
+            state.activeLift,
+            state.activeSet
+          );
+          state.setActiveLift(lift);
+          state.setActiveSet(set);
         },
         goTo: (program, payload) => {
           const state = get();

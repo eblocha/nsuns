@@ -36,6 +36,29 @@ export const currentSet = (
   return current.sets[set] || null;
 };
 
+/** check if a set index can roll over to the next lift, and return the new [lift, set] indices */
+export const rolloverSet = (
+  program: Program,
+  day: number,
+  lift: number,
+  set: number
+): [number, number] => {
+  const lifts = currentDay(program, day);
+  if (!lifts) return [lift, set];
+
+  for (let i = lift; i < lifts.length; i++) {
+    const len = lifts[i].sets?.length ?? 0;
+    if (set >= len) {
+      set -= len;
+      lift++;
+    } else {
+      return [lift, set];
+    }
+  }
+
+  return [lift, set];
+};
+
 /**
  * Creates a string to represent the rep count in a set component
  * @param reps The reps property to display
@@ -111,6 +134,7 @@ export const displayArbitrarySet = ({
   units: Units;
   includeName?: boolean;
 }) => {
+  [lift, set] = rolloverSet(program, day, lift, set);
   const currLift = currentLift(program, day, lift);
 
   if (!currLift) return null;
