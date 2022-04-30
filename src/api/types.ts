@@ -10,67 +10,83 @@ export enum Units {
 
 // Lift Sets ------------------------------------------------------------------
 export type MainLiftSet = {
-  id: string
-  reps: number | string
-  percentage: number
-}
+  id: string;
+  reps: number | string;
+  percentage: number;
+};
 
 export type CustomLiftSet = {
-  id: string
-  reps?: number | string
-  description?: string
-  weight?: number | string
-}
+  id: string;
+  reps?: number | string;
+  description?: string;
+  weight?: number | string;
+};
 
 // Lifts ----------------------------------------------------------------------
 export type MainLift = {
-  id: string
-  type: LiftTypes.MAIN
-  name: string
-  base: string
-  sets: MainLiftSet[]
-}
+  id: string;
+  type: LiftTypes.MAIN;
+  name: string;
+  base: string;
+  sets: MainLiftSet[];
+};
 
 export type CustomLift = {
-  id: string
-  type: LiftTypes.CUSTOM
-  name: string
-  sets?: CustomLiftSet[]
-  description?: string
-}
+  id: string;
+  type: LiftTypes.CUSTOM;
+  name: string;
+  sets?: CustomLiftSet[];
+  description?: string;
+};
 
-export type Lift = MainLift | CustomLift
+export type Lift = MainLift | CustomLift;
 
 export type CompiledProgram = {
-  [day in Day]?: CustomLift[]
-}
+  [day in Day]?: CustomLift[];
+};
 
 // User Data ------------------------------------------------------------------
 
-export type Day = 'monday' | 'tuesday' | 'wednesday' | 'thursday' | 'friday' | 'saturday' | 'sunday'
+export type Day =
+  | 'monday'
+  | 'tuesday'
+  | 'wednesday'
+  | 'thursday'
+  | 'friday'
+  | 'saturday'
+  | 'sunday';
 
 export type Program = {
-  [day in Day]?: Lift[]
-}
+  [day in Day]?: Lift[];
+};
 
 export type Maxes = {
-  [lift: string]: number
-}
+  [lift: string]: number;
+};
 
 export type Reps = {
-  [lift: string]: number | null
-}
+  [lift: string]: number | null;
+};
+
+export type StatData = {
+  title: string;
+  value: string | number;
+};
+
+export type DataWithHistory = StatData & {
+  history?: number[];
+};
 
 export type Unified = {
-  program: Program
-  maxes: Maxes[]
-  reps: Reps[]
-  user: User
-}
+  program: Program;
+  maxes: Maxes[];
+  reps: Reps[];
+  user: User;
+};
 
 export type User = {
-  name: string
-}
+  name: string;
+};
 
 export enum Keys {
   PROGRAM = 'program',

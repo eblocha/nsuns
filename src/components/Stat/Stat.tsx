@@ -1,9 +1,5 @@
 import React from 'react';
-
-export type StatData = {
-  title: string;
-  value: string | number;
-};
+import { StatData } from '../../api';
 
 const Stat = (props: StatData) => {
   return (

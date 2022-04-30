@@ -27,7 +27,9 @@ const TopInfo = () => {
   return (
     <div className="flex flex-row items-center overflow-hidden w-full h-full p-5 justify-between">
       <div className="flex flex-col grow overflow-hidden">
-        <div className="overflow-hidden text-7xl mb-4">{current.data}</div>
+        <div className="overflow-hidden text-7xl mb-4">
+          {current.data || ''}
+        </div>
         <div className="overflow-hidden text-5xl opacity-50">
           Next: {next.data}
         </div>

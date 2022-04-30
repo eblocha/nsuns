@@ -1,10 +1,7 @@
 import React from 'react';
 import { Sparklines, SparklinesLine } from 'react-sparklines';
-import Stat, { StatData } from './Stat';
-
-type DataWithHistory = StatData & {
-  history?: number[];
-};
+import { DataWithHistory } from '../../api';
+import Stat from './Stat';
 
 type IProps = {
   title: string;
@@ -16,8 +13,8 @@ const StatList = (props: IProps) => {
     <div className="flex flex-col overflow-hidden">
       <div className="text-2xl font-semibold mb-1">{props.title}</div>
       <div className="flex flex-col overflow-y-auto grow">
-        {props.stats.map((stat, index) => (
-          <div className="flex flex-row py-2 grow-0" key={index}>
+        {props.stats.map((stat) => (
+          <div className="flex flex-row py-2 grow-0" key={stat.title}>
             <Stat {...stat} />
             <div className="px-2">
               <Sparklines data={stat.history || []}>

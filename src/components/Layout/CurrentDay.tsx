@@ -36,9 +36,7 @@ const CurrentDay = () => {
     });
   }, [day, maxes, program, units]);
 
-  return (
-    <Day lifts={lifts} title={dayString} onClick={() => {}} active={true} />
-  );
+  return <Day lifts={lifts} title={dayString} active={true} />;
 };
 
 export default CurrentDay;

@@ -1,6 +1,11 @@
 import { Program, Keys, LiftTypes } from './types';
 import { createApi, lock } from './client';
 
+/**
+ * Get the user's program
+ * @param profile The user profile
+ * @returns The user's program
+ */
 export const getProgram = async (profile: string) => {
   const api = createApi(profile);
   return await lock.withShareable<Program>(
@@ -10,6 +15,12 @@ export const getProgram = async (profile: string) => {
   );
 };
 
+/**
+ * Update the user's program
+ * @param profile The user profile
+ * @param program The program update
+ * @returns The new program value
+ */
 export const setProgram = async (profile: string, program: Program) => {
   const api = createApi(profile);
   await lock.withExclusive(Keys.PROGRAM, async () => {
