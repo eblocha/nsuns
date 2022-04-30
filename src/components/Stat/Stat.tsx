@@ -10,6 +10,10 @@ const Stat = (props: IProps) => {
 
   const onEdit: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
+      if (e.target.value === props.value.toString()) {
+        return;
+      }
+      console.log(e.target.value);
       const keep =
         !!props.onEdit && props.onEdit(props.id, e.target.value || '');
       if (!keep) {
@@ -17,7 +21,7 @@ const Stat = (props: IProps) => {
       }
     },
     // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.onEdit, props.id]
+    [props.onEdit, props.id, props.value]
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
