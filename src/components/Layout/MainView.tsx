@@ -27,7 +27,7 @@ const MainView = () => {
       <div className="flex flex-row items-center overflow-hidden">
         <div className="pr-3">
           <button
-            className="w-12 h-12 rounded-full bg-gray-500 m-0.5 flex items-center justify-center"
+            className="w-12 h-12 rounded-full bg-gray-600 hover:bg-gray-500 m-0.5 flex items-center justify-center"
             onClick={decrement}
           >
             <FaArrowLeft />
@@ -36,7 +36,7 @@ const MainView = () => {
         <CurrentDay />
         <div className="pl-3">
           <button
-            className="w-12 h-12 rounded-full bg-gray-500 m-0.5 flex items-center justify-center"
+            className="w-12 h-12 rounded-full bg-gray-600 hover:bg-gray-500 m-0.5 flex items-center justify-center"
             onClick={increment}
           >
             <FaArrowRight />
