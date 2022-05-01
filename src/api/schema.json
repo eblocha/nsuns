@@ -1,0 +1,103 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema",
+  "definitions": {
+    "day": {
+      "type": "array",
+      "items": {
+        "anyOf": [
+          { "$ref": "#/definitions/mainLift" },
+          { "$ref": "#/definitions/customLift" }
+        ]
+      }
+    },
+    "mainLift": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "const": "main" },
+        "name": { "type": "string" },
+        "base": { "type": "string" },
+        "sets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "reps": { "type": ["integer", "string"] },
+              "percentage": { "type": "number" }
+            },
+            "additionalProperties": false,
+            "required": ["id", "reps", "percentage"]
+          }
+        }
+      },
+      "additionalProperties": false,
+      "required": ["id", "type", "name", "base", "sets"]
+    },
+    "customLift": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "type": { "const": "custom" },
+        "name": { "type": "string" },
+        "sets": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "id": { "type": "string" },
+              "reps": { "type": ["integer", "string"] },
+              "description": { "type": "string" },
+              "weight": { "type": ["integer", "string"] }
+            },
+            "additionalProperties": false,
+            "required": ["id"]
+          }
+        },
+        "description": { "type": "string" }
+      },
+      "required": ["id", "type", "name"],
+      "additionalProperties": false
+    }
+  },
+  "type": "object",
+  "properties": {
+    "maxes": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": { "type": "integer" }
+      }
+    },
+    "reps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": { "type": ["integer", "null"] }
+      }
+    },
+    "user": {
+      "type": "object",
+      "properties": {
+        "name": { "type": "string" }
+      },
+      "required": ["name"],
+      "additionalProperties": false
+    },
+    "program": {
+      "type": "object",
+      "properties": {
+        "monday": { "$ref": "#/definitions/day" },
+        "tuesday": { "$ref": "#/definitions/day" },
+        "wednesday": { "$ref": "#/definitions/day" },
+        "thursday": { "$ref": "#/definitions/day" },
+        "friday": { "$ref": "#/definitions/day" },
+        "saturday": { "$ref": "#/definitions/day" },
+        "sunday": { "$ref": "#/definitions/day" }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["maxes", "reps", "user"],
+  "additionalProperties": false
+}

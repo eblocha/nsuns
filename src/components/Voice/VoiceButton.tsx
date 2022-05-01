@@ -1,10 +1,10 @@
-import React, { useState } from 'react';
+import { useState } from 'react';
 import { FaMicrophoneAlt, FaSpinner } from 'react-icons/fa';
 
 const VoiceButton = () => {
-  const [isActive, setIsActive] = useState(false);
-  const [isListening, setIsListening] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isActive] = useState(false);
+  const [isListening] = useState(false);
+  const [isLoading] = useState(false);
 
   const className = isListening
     ? 'bg-red-500 hover:bg-red-400 focus:ring-red-400'
