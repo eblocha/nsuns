@@ -4,7 +4,11 @@ import ToolbarButton from '../ToolbarButton';
 
 const Undo = () => {
   return (
-    <ToolbarButton onClick={useUndoUpdate()}>
+    <ToolbarButton
+      onClick={useUndoUpdate()}
+      title="Undo Update"
+      aria-label="undo update"
+    >
       <FaUndoAlt />
     </ToolbarButton>
   );

@@ -10,6 +10,8 @@ import Profile from '../Tools/Profile/Profile';
 import Settings from '../Tools/Settings/Settings';
 import Undo from '../Tools/Undo/Undo';
 import NextSet from '../Tools/NextSet/NextSet';
+import Export from '../Tools/Export/Export';
+import Import from '../Tools/Import/Import';
 
 const MainView = () => {
   const [day, setDay] = useDay();
@@ -57,6 +59,8 @@ const MainView = () => {
           <Toolbar>
             <Profile />
             <Settings />
+            <Import />
+            <Export />
           </Toolbar>
         </div>
       </div>

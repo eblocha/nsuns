@@ -3,7 +3,7 @@ import ToolbarButton from '../ToolbarButton';
 
 const Profile = () => {
   return (
-    <ToolbarButton>
+    <ToolbarButton title="Switch Profile" aria-label="switch profile">
       <FaUser />
     </ToolbarButton>
   );

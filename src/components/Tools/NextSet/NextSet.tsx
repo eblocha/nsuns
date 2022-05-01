@@ -4,7 +4,11 @@ import ToolbarButton from '../ToolbarButton';
 
 const NextSet = () => {
   return (
-    <ToolbarButton onClick={useNextSet()}>
+    <ToolbarButton
+      onClick={useNextSet()}
+      title="Next Set"
+      aria-label="next set"
+    >
       <FaAngleDoubleRight />
     </ToolbarButton>
   );

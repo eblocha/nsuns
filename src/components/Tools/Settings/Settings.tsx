@@ -3,7 +3,7 @@ import ToolbarButton from '../ToolbarButton';
 
 const Settings = () => {
   return (
-    <ToolbarButton>
+    <ToolbarButton title="Edit Settings" aria-label="edit settings">
       <FaSlidersH />
     </ToolbarButton>
   );
