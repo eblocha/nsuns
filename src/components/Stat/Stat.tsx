@@ -5,22 +5,20 @@ type IProps = StatData & {
   onEdit?: (id: string, value: string) => boolean;
 };
 
-const Stat = (props: IProps) => {
+const Stat = ({ onEdit, ...props }: IProps) => {
   const [value, setValue] = useState(props.value);
 
-  const onEdit: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+  const handleBlur: React.ChangeEventHandler<HTMLInputElement> = useCallback(
     (e) => {
       if (e.target.value === props.value.toString()) {
         return;
       }
-      const keep =
-        !!props.onEdit && props.onEdit(props.id, e.target.value || '');
+      const keep = !!onEdit && onEdit(props.id, e.target.value || '');
       if (!keep) {
         setValue(props.value);
       }
     },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [props.onEdit, props.id, props.value]
+    [onEdit, props.id, props.value]
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -44,8 +42,8 @@ const Stat = (props: IProps) => {
           className="w-full h-full overflow-hidden py-3 bg-transparent text-center"
           value={value}
           onChange={onChange}
-          onBlur={onEdit}
-          disabled={!props.onEdit}
+          onBlur={handleBlur}
+          disabled={!onEdit}
         />
       </div>
     </div>
