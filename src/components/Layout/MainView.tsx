@@ -4,6 +4,12 @@ import MaxStats from '../Stat/MaxStats';
 import RepStats from '../Stat/RepStats';
 import CurrentDay from './CurrentDay';
 import { FaArrowRight, FaArrowLeft } from 'react-icons/fa';
+import { Toolbar } from '../Tools/Toolbar';
+import { Update } from '../Tools/Update/Update';
+import Profile from '../Tools/Profile/Profile';
+import Settings from '../Tools/Settings/Settings';
+import Undo from '../Tools/Undo/Undo';
+import NextSet from '../Tools/NextSet/NextSet';
 
 const MainView = () => {
   const [day, setDay] = useDay();
@@ -37,8 +43,23 @@ const MainView = () => {
           </button>
         </div>
       </div>
-      <MaxStats />
-      <RepStats />
+      <div className="col-span-2 flex flex-col">
+        <div className="grid grid-cols-2 gap-2 grow">
+          <MaxStats />
+          <RepStats />
+        </div>
+        <div className="py-1 shrink-0 flex flex-row items-center">
+          <Toolbar className="mr-2">
+            <Update />
+            <Undo />
+            <NextSet />
+          </Toolbar>
+          <Toolbar>
+            <Profile />
+            <Settings />
+          </Toolbar>
+        </div>
+      </div>
     </div>
   );
 };

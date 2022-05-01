@@ -2,7 +2,7 @@ import React from 'react';
 import MainView from './MainView';
 import TopInfo from './TopInfo';
 
-const Layout = () => {
+const Dashboard = () => {
   return (
     <div className="flex flex-col overflow-hidden h-full w-full">
       <div className="shrink-0 overflow-hidden">
@@ -15,4 +15,4 @@ const Layout = () => {
   );
 };
 
-export default Layout;
+export default Dashboard;

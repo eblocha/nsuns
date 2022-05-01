@@ -1,12 +1,12 @@
 import React from 'react';
 import { QueryClientProvider } from 'react-query';
 import { queryClient } from './api';
-import Layout from './components/Layout/Layout';
+import Dashboard from './components/Layout/Dashboard';
 
 function App() {
   return (
     <QueryClientProvider client={queryClient}>
-      <Layout />
+      <Dashboard />
     </QueryClientProvider>
   );
 }
