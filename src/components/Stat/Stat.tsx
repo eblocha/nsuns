@@ -8,17 +8,32 @@ type IProps = StatData & {
 const Stat = ({ onEdit, ...props }: IProps) => {
   const [value, setValue] = useState(props.value);
 
-  const handleBlur: React.ChangeEventHandler<HTMLInputElement> = useCallback(
-    (e) => {
-      if (e.target.value === props.value.toString()) {
+  const handleEdit = useCallback(
+    (proposed: string) => {
+      if (proposed === props.value.toString()) {
         return;
       }
-      const keep = !!onEdit && onEdit(props.id, e.target.value || '');
+      const keep = !!onEdit && onEdit(props.id, proposed || '');
       if (!keep) {
         setValue(props.value);
       }
     },
     [onEdit, props.id, props.value]
+  );
+
+  const handleBlur: React.ChangeEventHandler<HTMLInputElement> = useCallback(
+    (e) => {
+      handleEdit(e.target.value);
+    },
+    [handleEdit]
+  );
+
+  const handleSubmit: React.FormEventHandler<HTMLFormElement> = useCallback(
+    (e) => {
+      e.preventDefault();
+      handleEdit(value.toString());
+    },
+    [handleEdit, value]
   );
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = useCallback(
@@ -38,13 +53,15 @@ const Stat = ({ onEdit, ...props }: IProps) => {
         {props.title}
       </div>
       <div className="shrink-0 text-5xl m-0.5">
-        <input
-          className="w-full h-full overflow-hidden py-3 bg-transparent text-center"
-          value={value}
-          onChange={onChange}
-          onBlur={handleBlur}
-          disabled={!onEdit}
-        />
+        <form onSubmit={handleSubmit}>
+          <input
+            className="w-full h-full overflow-hidden py-3 bg-transparent text-center"
+            value={value}
+            onChange={onChange}
+            onBlur={handleBlur}
+            disabled={!onEdit}
+          />
+        </form>
       </div>
     </div>
   );
