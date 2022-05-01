@@ -1,9 +1,10 @@
 import { FaUndoAlt } from 'react-icons/fa';
+import { useUndoUpdate } from '../../../hooks/useUndoUpdate';
 import ToolbarButton from '../ToolbarButton';
 
 const Undo = () => {
   return (
-    <ToolbarButton>
+    <ToolbarButton onClick={useUndoUpdate()}>
       <FaUndoAlt />
     </ToolbarButton>
   );

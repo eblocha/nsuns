@@ -63,7 +63,7 @@ const useStore = create<Store>(
             program,
             state.day,
             state.activeLift,
-            state.activeSet
+            state.activeSet + 1
           );
           state.setActiveLift(lift);
           state.setActiveSet(set);
