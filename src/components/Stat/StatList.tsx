@@ -17,7 +17,7 @@ const StatList = (props: IProps) => {
       <div className="text-2xl font-semibold mb-1">{props.title}</div>
       <div className="flex flex-col overflow-y-auto grow">
         {props.stats.map((stat) => (
-          <div className="flex flex-row py-2" key={stat.title}>
+          <div className="flex flex-row py-2" key={stat.id}>
             <Stat {...stat} onEdit={props.onEdit} />
             <Graph data={stat.history || empty} />
           </div>
