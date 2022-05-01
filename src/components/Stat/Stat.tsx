@@ -37,7 +37,7 @@ const Stat = ({ onEdit, ...props }: IProps) => {
       <div className="shrink-0 bg-gray-700 text-center p-2 text-xl">
         {props.title}
       </div>
-      <div className="shrink-0 text-5xl h-20 m-0.5">
+      <div className="shrink-0 text-5xl m-0.5">
         <input
           className="w-full h-full overflow-hidden py-3 bg-transparent text-center"
           value={value}

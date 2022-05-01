@@ -1,6 +1,6 @@
 import React from 'react';
-import { Sparklines, SparklinesLine } from 'react-sparklines';
 import { DataWithHistory } from '../../api';
+import { Graph } from './Graph';
 import Stat from './Stat';
 
 type IProps = {
@@ -9,22 +9,17 @@ type IProps = {
   onEdit?: (id: string, value: string) => boolean;
 };
 
+const empty: number[] = [];
+
 const StatList = (props: IProps) => {
   return (
     <div className="flex flex-col overflow-hidden">
       <div className="text-2xl font-semibold mb-1">{props.title}</div>
       <div className="flex flex-col overflow-y-auto grow">
         {props.stats.map((stat) => (
-          <div className="flex flex-row py-2 grow-0" key={stat.title}>
+          <div className="flex flex-row py-2" key={stat.title}>
             <Stat {...stat} onEdit={props.onEdit} />
-            <div className="px-2">
-              <Sparklines data={stat.history || []}>
-                <SparklinesLine
-                  color="rgb(29, 78, 216)"
-                  style={{ strokeWidth: 3, fill: 'none' }}
-                />
-              </Sparklines>
-            </div>
+            <Graph data={stat.history || empty} />
           </div>
         ))}
       </div>
