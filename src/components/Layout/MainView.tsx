@@ -7,10 +7,9 @@ import Profile from '../Tools/Profile/Profile';
 import Settings from '../Tools/Settings/Settings';
 import Undo from '../Tools/Undo/Undo';
 import NextSet from '../Tools/NextSet/NextSet';
-import Export from '../Tools/Export/Export';
-import Import from '../Tools/Import/Import';
 import NextDay from '../Tools/Day/NextDay';
 import PrevDay from '../Tools/Day/PrevDay';
+import Edit from '../Tools/Edit/Edit';
 
 const MainView = () => {
   return (
@@ -38,8 +37,7 @@ const MainView = () => {
           <Toolbar>
             <Profile />
             <Settings />
-            <Import />
-            <Export />
+            <Edit />
           </Toolbar>
         </div>
       </div>
