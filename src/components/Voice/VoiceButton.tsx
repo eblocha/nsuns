@@ -16,6 +16,7 @@ const VoiceButton = () => {
     <div className="shrink-0 h-32 w-32">
       <button
         className={`h-full rounded-full w-full flex items-center justify-center focus:ring-2 ${className}`}
+        autoFocus
       >
         {isLoading ? (
           <FaSpinner size={48} className="animate-spin" />
