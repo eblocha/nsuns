@@ -94,4 +94,5 @@ export enum Keys {
   MAXES = 'maxes',
   REPS = 'reps',
   USER = 'user',
+  EXTERNAL = 'external',
 }

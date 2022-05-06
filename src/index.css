@@ -10,3 +10,11 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+
+.modal-wrapper {
+  @apply w-screen h-screen absolute top-0 left-0;
+}
+
+.modal-backdrop {
+  @apply modal-wrapper bg-black opacity-50;
+}

@@ -1,68 +1,76 @@
-import { useQuery, useMutation, useQueryClient } from 'react-query'
-import { Keys, getReps, addReps, setReps, updateReps, Reps, deleteReps } from '../api'
+import { useQuery, useMutation, useQueryClient } from 'react-query';
+import {
+  Keys,
+  getReps,
+  addReps,
+  setReps,
+  updateReps,
+  Reps,
+  deleteReps,
+} from '../api';
 
 /** State */
 const useReps = (profile: string) => {
-  return useQuery([Keys.REPS, profile], async () => getReps(profile), {
+  return useQuery([profile, Keys.REPS], async () => getReps(profile), {
     staleTime: Infinity,
-  })
-}
+  });
+};
 
 /** Actions */
 export const useAddReps = (profile: string) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation(
     async (reps: Reps) => {
-      return await addReps(profile, reps)
+      return await addReps(profile, reps);
     },
     {
-      onSuccess: newMaxes => {
-        queryClient.setQueryData([Keys.REPS, profile], newMaxes)
+      onSuccess: (newMaxes) => {
+        queryClient.setQueryData([profile, Keys.REPS], newMaxes);
       },
     }
-  )
-}
+  );
+};
 
 export const useUpdateReps = (profile: string) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation(
     async (reps: Reps) => {
-      return await updateReps(profile, reps)
+      return await updateReps(profile, reps);
     },
     {
-      onSuccess: newMaxes => {
-        queryClient.setQueryData([Keys.REPS, profile], newMaxes)
+      onSuccess: (newMaxes) => {
+        queryClient.setQueryData([profile, Keys.REPS], newMaxes);
       },
     }
-  )
-}
+  );
+};
 
 export const useDeleteReps = (profile: string) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation(
     async () => {
-      return await deleteReps(profile)
+      return await deleteReps(profile);
     },
     {
-      onSuccess: newMaxes => {
-        queryClient.setQueryData([Keys.REPS, profile], newMaxes)
+      onSuccess: (newMaxes) => {
+        queryClient.setQueryData([profile, Keys.REPS], newMaxes);
       },
     }
-  )
-}
+  );
+};
 
 export const useSetReps = (profile: string) => {
-  const queryClient = useQueryClient()
+  const queryClient = useQueryClient();
   return useMutation(
     async (reps: Reps[]) => {
-      return await setReps(profile, reps)
+      return await setReps(profile, reps);
     },
     {
-      onSuccess: newMaxes => {
-        queryClient.setQueryData([Keys.REPS, profile], newMaxes)
+      onSuccess: (newMaxes) => {
+        queryClient.setQueryData([profile, Keys.REPS], newMaxes);
       },
     }
-  )
-}
+  );
+};
 
-export default useReps
+export default useReps;
