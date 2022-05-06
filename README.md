@@ -15,6 +15,7 @@ My personal copy includes voice-control. I cannot release this version because t
 - Async State: React-Query
 - Build Tool: Vite
 - Testing: Jest
+- Styles: Tailwind and PostCSS
 - 100% Typescript
 
 ## Usage
