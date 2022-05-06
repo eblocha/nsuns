@@ -20,7 +20,7 @@ const wrapperStyle: React.CSSProperties = {
 export const Graph = ({ data }: IProps) => {
   return (
     <div
-      className="flex flex-col items-center justify-center"
+      className="flex flex-col items-center justify-center px-2"
       style={wrapperStyle}
     >
       <Sparklines data={data} height={60} width={240} margin={5}>
