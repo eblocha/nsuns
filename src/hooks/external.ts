@@ -9,6 +9,7 @@ export const useExportData = (profile: string) => {
     },
     {
       cacheTime: 0,
+      staleTime: 0,
     }
   );
 };
