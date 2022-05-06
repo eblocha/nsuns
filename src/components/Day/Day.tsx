@@ -18,7 +18,7 @@ const Day = (props: IProps) => {
   const [active, setActive] = useActiveLift();
 
   return (
-    <div className="flex flex-col bg-gray-800 h-full w-full overflow-hidden">
+    <div className="flex flex-col bg-gray-800 h-full w-full overflow-hidden rounded">
       <div className="shrink-0 px-3 py-2 text-center text-2xl bg-gray-700">
         {props.title}
       </div>
