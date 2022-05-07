@@ -8,7 +8,7 @@ This runs on a raspberry pi attached to a TV on the wall.
 
 My personal copy includes voice-control. I cannot release this version because the license for the voice-activation library prevents me from doing so.
 
-[!screenshot](screenshots/Screenshot_2022-05-07.png)
+![screenshot](screenshots/Screenshot_2022-05-07.png)
 
 ## Tech Stack
 
