@@ -1,4 +1,11 @@
-import { AnimatePresence, Variants, motion, Transition } from 'framer-motion';
+import {
+  AnimatePresence,
+  Variants,
+  Transition,
+  m,
+  LazyMotion,
+  domAnimation,
+} from 'framer-motion';
 import { useLayoutEffect, useRef } from 'react';
 import useDay from '../../hooks/useDay';
 import NextDay from '../Tools/Day/NextDay';
@@ -53,20 +60,22 @@ const DayColumn = () => {
       </div>
       <div className="flex-1 h-full overflow-hidden relative">
         <div className="w-full h-full absolute overflow-clip">
-          <AnimatePresence initial={false} custom={direction}>
-            <motion.div
-              key={day}
-              custom={direction}
-              variants={variants}
-              initial="enter"
-              animate="center"
-              exit="exit"
-              transition={transition}
-              className="w-full h-full absolute"
-            >
-              <CurrentDay day={day} />
-            </motion.div>
-          </AnimatePresence>
+          <LazyMotion features={domAnimation} strict>
+            <AnimatePresence initial={false} custom={direction}>
+              <m.div
+                key={day}
+                custom={direction}
+                variants={variants}
+                initial="enter"
+                animate="center"
+                exit="exit"
+                transition={transition}
+                className="w-full h-full absolute"
+              >
+                <CurrentDay day={day} />
+              </m.div>
+            </AnimatePresence>
+          </LazyMotion>
         </div>
       </div>
       <div className="pl-2 shrink-0">
