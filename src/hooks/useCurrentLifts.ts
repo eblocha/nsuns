@@ -1,17 +1,15 @@
 import { useMemo } from 'react';
 import { LiftTypes } from '../api';
 import { convertSets, currentDay } from '../utils/program';
-import useDay from './useDay';
 import useMaxes from './useMaxes';
 import useProfile from './useProfile';
 import useProgram from './useProgram';
 import useUnits from './useUnits';
 
-export const useCurrentLifts = () => {
+export const useLifts = (day: number) => {
   const [profile] = useProfile();
   const { data: program } = useProgram(profile);
   const { data: maxes } = useMaxes(profile);
-  const [day] = useDay();
   const [units] = useUnits();
 
   return useMemo(() => {

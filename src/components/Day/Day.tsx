@@ -22,7 +22,7 @@ const Day = (props: IProps) => {
       <div className="shrink-0 px-3 py-2 text-center text-2xl bg-gray-700">
         {props.title}
       </div>
-      <ul className="grow overflow-y-auto flex flex-col p-3">
+      <ul className="grow overflow-y-auto flex flex-col p-3 overflow-x-hidden">
         {props.lifts.map((lift, index) => (
           <React.Fragment key={lift.id}>
             <Sets
