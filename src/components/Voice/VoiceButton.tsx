@@ -1,11 +1,87 @@
-import { useState } from 'react';
+import { RhinoInference } from '@picovoice/rhino-web-core';
+import { PicovoiceWorkerFactory } from '@picovoice/picovoice-web-en-worker';
+import { usePicovoice } from '@picovoice/picovoice-web-react';
+
+import { useCallback, useState } from 'react';
 import { FaMicrophoneAlt, FaSpinner } from 'react-icons/fa';
 
-const VoiceButton = () => {
-  const [isActive] = useState(false);
-  const [isListening] = useState(false);
-  const [isLoading] = useState(false);
+const ACCESS_KEY = import.meta.env.VITE_PICO_ACCESS_KEY as string | undefined;
+const JARVIS = import.meta.env.VITE_JARVIS_PPN_B64 as string | undefined;
+const RHINO = import.meta.env.VITE_RHINO_B64 as string | undefined;
 
+type IProps = {
+  keywordModel: string;
+  keywordName: string;
+  ak: string;
+  intentModel: string;
+};
+
+const noOp = () => {};
+
+const PersonalVoiceButton = ({
+  keywordModel,
+  keywordName,
+  ak: accessKey,
+  intentModel,
+}: IProps) => {
+  const [, setInference] = useState<RhinoInference | null>(null);
+  const [started, setStarted] = useState(false);
+
+  const inferenceEventHandler = useCallback(
+    (rhinoInference: RhinoInference) => {
+      console.log(rhinoInference);
+      setInference(rhinoInference);
+    },
+    []
+  );
+
+  const { isLoaded, isListening, start, stop, engine } = usePicovoice(
+    PicovoiceWorkerFactory,
+    {
+      accessKey,
+      porcupineKeyword: {
+        base64: keywordModel,
+        custom: keywordName,
+      },
+      rhinoContext: { base64: intentModel },
+      start: true,
+    },
+    noOp,
+    inferenceEventHandler
+  );
+
+  const handleClick = useCallback(() => {
+    setStarted(true);
+    if (!isListening) {
+      start();
+    } else {
+      stop();
+    }
+  }, [isListening, start, stop]);
+
+  return (
+    <VoiceButtonInner
+      onClick={handleClick}
+      isActive={isListening}
+      isListening={engine === 'rhn'}
+      isLoading={started && !isLoaded}
+    />
+  );
+};
+
+type ButtonProps = {
+  onClick?: React.MouseEventHandler<HTMLButtonElement>;
+  isListening?: boolean;
+  isActive?: boolean;
+  isLoading?: boolean;
+};
+
+const VoiceButtonInner = ({
+  isActive,
+  isListening,
+  isLoading,
+  onClick,
+}: ButtonProps) => {
   const className = isListening
     ? 'bg-red-500 hover:bg-red-400 focus:ring-red-400'
     : isActive
@@ -16,7 +92,7 @@ const VoiceButton = () => {
     <div className="shrink-0 h-32 w-32">
       <button
         className={`h-full rounded-full w-full flex items-center justify-center focus:ring-2 ${className}`}
-        autoFocus
+        onClick={onClick}
       >
         {isLoading ? (
           <FaSpinner size={48} className="animate-spin" />
@@ -26,6 +102,23 @@ const VoiceButton = () => {
       </button>
     </div>
   );
+};
+
+const VoiceButton = () => {
+  const realVoice = RHINO && ACCESS_KEY && JARVIS;
+
+  if (realVoice) {
+    return (
+      <PersonalVoiceButton
+        ak={ACCESS_KEY}
+        keywordModel={JARVIS}
+        keywordName="Jarvis"
+        intentModel={RHINO}
+      />
+    );
+  } else {
+    return <VoiceButtonInner />;
+  }
 };
 
 export default VoiceButton;
