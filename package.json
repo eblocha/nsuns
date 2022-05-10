@@ -6,7 +6,8 @@
     "build": "tsc && vite build",
     "preview": "vite preview",
     "lint": "eslint --ext=.ts,.js,.tsx,.jsx .",
-    "format": "prettier --write ."
+    "format": "prettier --write .",
+    "test": "jest"
   },
   "prettier": {
     "printWidth": 80,
@@ -33,6 +34,10 @@
     "zustand": "^3.6.9"
   },
   "devDependencies": {
+    "@babel/core": "^7.17.10",
+    "@babel/preset-env": "^7.17.10",
+    "@babel/preset-react": "^7.16.7",
+    "@babel/preset-typescript": "^7.16.7",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/user-event": "^13.5.0",
@@ -44,6 +49,7 @@
     "@typescript-eslint/parser": "^5.10.0",
     "@vitejs/plugin-react": "^1.0.7",
     "autoprefixer": "^10.4.2",
+    "babel-jest": "^28.1.0",
     "confusing-browser-globals": "^1.0.11",
     "eslint": "^8.7.0",
     "eslint-config-prettier": "^8.3.0",
@@ -54,6 +60,7 @@
     "eslint-plugin-react": "^7.28.0",
     "eslint-plugin-react-hooks": "^4.3.0",
     "eslint-plugin-testing-library": "^5.0.3",
+    "identity-obj-proxy": "^3.0.0",
     "jest": "^27.4.7",
     "postcss": "^8.4.5",
     "prettier": "^2.5.1",

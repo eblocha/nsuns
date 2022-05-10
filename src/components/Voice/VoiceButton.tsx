@@ -16,6 +16,7 @@ type IProps = {
   intentModel: string;
 };
 
+// eslint-disable-next-line @typescript-eslint/no-empty-function
 const noOp = () => {};
 
 const PersonalVoiceButton = ({
