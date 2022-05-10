@@ -5,4 +5,6 @@ import schema from './schema.json';
 export const importSchema = schema;
 
 /** validate imported files */
-export const validate = new AJV().compile(schema);
+export const validate = new AJV({
+  allowUnionTypes: true,
+}).compile(schema);
