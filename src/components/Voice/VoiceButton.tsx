@@ -4,6 +4,7 @@ import { usePicovoice } from '@picovoice/picovoice-web-react';
 
 import { useCallback, useState } from 'react';
 import { FaMicrophoneAlt, FaSpinner } from 'react-icons/fa';
+import { validateInference } from '../../voiceControl';
 
 const ACCESS_KEY = import.meta.env.VITE_PICO_ACCESS_KEY as string | undefined;
 const JARVIS = import.meta.env.VITE_JARVIS_PPN_B64 as string | undefined;
@@ -25,13 +26,12 @@ const PersonalVoiceButton = ({
   ak: accessKey,
   intentModel,
 }: IProps) => {
-  const [, setInference] = useState<RhinoInference | null>(null);
   const [started, setStarted] = useState(false);
 
   const inferenceEventHandler = useCallback(
     (rhinoInference: RhinoInference) => {
       console.log(rhinoInference);
-      setInference(rhinoInference);
+      console.log(validateInference(rhinoInference));
     },
     []
   );
