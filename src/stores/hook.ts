@@ -1,8 +1,9 @@
 import { nanoid } from 'nanoid';
 import create from 'zustand';
 import { devtools } from 'zustand/middleware';
-import { Units } from '../api';
+import { Program, Units } from '../api';
 import { today } from '../utils/days';
+import { rolloverSet } from '../utils/program';
 import { Store } from './types';
 
 export const useStore = create<Store>(
@@ -27,6 +28,17 @@ export const useStore = create<Store>(
         setActiveLift: (index) => set({ activeLift: index }),
         profile: '',
         setProfile: (profile) => set({ profile }),
+        nextSet: (program: Program) => {
+          const state = get();
+          const [lift, set] = rolloverSet(
+            program,
+            state.day,
+            state.activeLift,
+            state.activeSet + 1
+          );
+          state.setActiveLift(lift);
+          state.setActiveSet(set);
+        },
         messages: {},
         messageOrder: [],
         addMessage: (message) => {

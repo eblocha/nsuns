@@ -1,4 +1,4 @@
-import { Units } from '../api';
+import { Program, Units } from '../api';
 
 export type Message = {
   message: string;
@@ -30,6 +30,7 @@ export type Store = {
   /** User id */
   profile: string;
   setProfile: (profile: string) => void;
+  nextSet: (program: Program) => void;
   messages: Record<string, PostedMessage>;
   messageOrder: string[];
   addMessage: (message: Message) => void;
