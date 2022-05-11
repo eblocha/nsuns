@@ -7,9 +7,9 @@ import { FaMicrophoneAlt, FaSpinner } from 'react-icons/fa';
 import { reportInference, validateInference } from '../../voiceControl';
 import useStore, { Store } from '../../stores';
 
-const ACCESS_KEY = import.meta.env.VITE_PICO_ACCESS_KEY as string | undefined;
-const JARVIS = import.meta.env.VITE_JARVIS_PPN_B64 as string | undefined;
-const RHINO = import.meta.env.VITE_RHINO_B64 as string | undefined;
+const ACCESS_KEY = import.meta.env.VITE_PICO_ACCESS_KEY;
+const JARVIS = import.meta.env.VITE_JARVIS_PPN_B64;
+const RHINO = import.meta.env.VITE_RHINO_B64;
 
 type IProps = {
   keywordModel: string;
