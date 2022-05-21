@@ -30,9 +30,13 @@ export type Store = {
   /** User id */
   profile: string;
   setProfile: (profile: string) => void;
-  nextSet: (program: Program) => void;
+
+  /** Notifications */
   messages: Record<string, PostedMessage>;
   messageOrder: string[];
   addMessage: (message: Message) => void;
   removeMessage: (id: string) => void;
+
+  // Voice control -------------------------------------------------------------
+  nextSet: (program: Program) => void;
 };

@@ -1,11 +1,9 @@
-import { RhinoInference } from '@picovoice/rhino-web-core';
 import { PicovoiceWorkerFactory } from '@picovoice/picovoice-web-en-worker';
 import { usePicovoice } from '@picovoice/picovoice-web-react';
 
 import { useCallback, useState } from 'react';
 import { FaMicrophoneAlt, FaSpinner } from 'react-icons/fa';
-import { reportInference, validateInference } from '../../voiceControl';
-import useStore, { Store } from '../../stores';
+import { useVoice } from '../../hooks/useVoice';
 
 const ACCESS_KEY = import.meta.env.VITE_PICO_ACCESS_KEY;
 const JARVIS = import.meta.env.VITE_JARVIS_PPN_B64;
@@ -21,8 +19,6 @@ type IProps = {
 // eslint-disable-next-line @typescript-eslint/no-empty-function
 const noOp = () => {};
 
-const selector = (state: Store) => state.addMessage;
-
 const PersonalVoiceButton = ({
   keywordModel,
   keywordName,
@@ -30,21 +26,8 @@ const PersonalVoiceButton = ({
   intentModel,
 }: IProps) => {
   const [started, setStarted] = useState(false);
-  const addMessage = useStore(selector);
 
-  const inferenceEventHandler = useCallback(
-    (rhinoInference: RhinoInference) => {
-      console.log(rhinoInference);
-      const inference = validateInference(rhinoInference);
-      const msg = reportInference(inference);
-      addMessage({
-        level: inference ? 'success' : 'error',
-        message: msg,
-        timeout: 5000,
-      });
-    },
-    [addMessage]
-  );
+  const inferenceEventHandler = useVoice();
 
   const { isLoaded, isListening, start, stop, engine } = usePicovoice(
     PicovoiceWorkerFactory,
