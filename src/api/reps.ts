@@ -28,7 +28,11 @@ export const addReps = async (profile: string, reps: Reps) => {
 };
 
 /** Update the latest reps entry for `profile` */
-export const updateReps = async (profile: string, reps: Reps) => {
+export const updateReps = async (
+  profile: string,
+  reps: Reps,
+  replace = false
+) => {
   const api = createApi(profile);
   return await lock.withExclusive(Keys.REPS, async () => {
     let current = (await api.getItem<Reps[]>(Keys.REPS)) || [];
@@ -36,9 +40,12 @@ export const updateReps = async (profile: string, reps: Reps) => {
       current = [reps];
     }
 
-    const latest = current[current.length - 1];
-
-    current[current.length - 1] = { ...latest, ...reps };
+    if (replace) {
+      current[current.length - 1] = reps;
+    } else {
+      const latest = current[current.length - 1];
+      current[current.length - 1] = { ...latest, ...reps };
+    }
     await api.setItem(Keys.REPS, current);
     return current;
   });

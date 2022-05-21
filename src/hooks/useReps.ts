@@ -34,8 +34,8 @@ export const useAddReps = (profile: string) => {
 export const useUpdateReps = (profile: string) => {
   const queryClient = useQueryClient();
   return useMutation(
-    async (reps: Reps) => {
-      return await updateReps(profile, reps);
+    async ({ reps, replace = false }: { reps: Reps; replace?: boolean }) => {
+      return await updateReps(profile, reps, replace);
     },
     {
       onSuccess: (newMaxes) => {

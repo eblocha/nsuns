@@ -37,7 +37,11 @@ export const addMaxes = async (profile: string, maxes: Maxes) => {
 };
 
 /** Update the latest max entry for `profile` */
-export const updateMaxes = async (profile: string, maxes: Maxes) => {
+export const updateMaxes = async (
+  profile: string,
+  maxes: Maxes,
+  replace = false
+) => {
   const api = createApi(profile);
   return await lock.withExclusive(Keys.MAXES, async () => {
     let current = (await api.getItem<Maxes[]>(Keys.MAXES)) || [];
@@ -45,9 +49,12 @@ export const updateMaxes = async (profile: string, maxes: Maxes) => {
       current = [maxes];
     }
 
-    const latest = current[current.length - 1];
-
-    current[current.length - 1] = { ...latest, ...maxes };
+    if (replace) {
+      current[current.length - 1] = maxes;
+    } else {
+      const latest = current[current.length - 1];
+      current[current.length - 1] = { ...latest, ...maxes };
+    }
     await api.setItem(Keys.MAXES, current);
     return current;
   });

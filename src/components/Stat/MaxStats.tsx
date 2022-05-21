@@ -24,7 +24,9 @@ const MaxStats = () => {
         return false;
       }
       mutate({
-        [id]: newMax,
+        maxes: {
+          [id]: newMax,
+        },
       });
 
       return true;

@@ -28,6 +28,7 @@ export const useVoice = () => {
   const { mutate: logReps } = useUpdateReps(profile);
   const updateWeights = useUpdate();
   const undoUpdate = useUndoUpdate();
+  const { mutate: updateReps } = useUpdateReps(profile);
 
   const success = useCallback(
     (msg: string) => {
@@ -69,7 +70,7 @@ export const useVoice = () => {
         case Intents.LOG_REPS:
           logReps(
             {
-              [inference.payload.type]: inference.payload.reps,
+              reps: { [inference.payload.type]: inference.payload.reps },
             },
             {
               onSuccess: () => {
@@ -95,6 +96,21 @@ export const useVoice = () => {
           undoUpdate();
           success('Undoing weight update');
           break;
+        case Intents.RESET_REPS:
+          updateReps(
+            { replace: true, reps: {} },
+            {
+              onSuccess: () => success('Reset reps'),
+              onError: () => {
+                addMessage({
+                  level: 'error',
+                  message: 'Failed to reset reps',
+                  timeout: DEFAULT_TIMEOUT,
+                });
+              },
+            }
+          );
+          break;
         default:
           addMessage({
             level: 'warning',
@@ -104,6 +120,15 @@ export const useVoice = () => {
           break;
       }
     },
-    [addMessage, logReps, nextSet, program, success, undoUpdate, updateWeights]
+    [
+      addMessage,
+      logReps,
+      nextSet,
+      program,
+      success,
+      undoUpdate,
+      updateReps,
+      updateWeights,
+    ]
   );
 };

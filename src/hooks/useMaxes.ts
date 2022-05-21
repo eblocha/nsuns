@@ -34,8 +34,8 @@ export const useAddMaxes = (profile: string) => {
 export const useUpdateMaxes = (profile: string) => {
   const queryClient = useQueryClient();
   return useMutation(
-    async (maxes: Maxes) => {
-      return await updateMaxes(profile, maxes);
+    async ({ maxes, replace = false }: { maxes: Maxes; replace?: boolean }) => {
+      return await updateMaxes(profile, maxes, replace);
     },
     {
       onSuccess: (newMaxes) => {

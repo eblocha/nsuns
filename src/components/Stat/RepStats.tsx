@@ -20,7 +20,9 @@ const RepStats = () => {
     (id: string, value: string): boolean => {
       if (value === '') {
         mutate({
-          [id]: null,
+          reps: {
+            [id]: null,
+          },
         });
         return true;
       }
@@ -29,7 +31,9 @@ const RepStats = () => {
         return false;
       }
       mutate({
-        [id]: reps,
+        reps: {
+          [id]: reps,
+        },
       });
 
       return true;
