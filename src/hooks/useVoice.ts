@@ -11,6 +11,7 @@ import { useUpdate } from './useUpdate';
 // Selectors
 const selectAddMessage = (state: Store) => state.addMessage;
 const selectNextSet = (state: Store) => state.nextSet;
+const selectGoTo = (state: Store) => state.goTo;
 
 const DEFAULT_TIMEOUT = 5000;
 
@@ -29,6 +30,7 @@ export const useVoice = () => {
   const updateWeights = useUpdate();
   const undoUpdate = useUndoUpdate();
   const { mutate: updateReps } = useUpdateReps(profile);
+  const goTo = useStore(selectGoTo);
 
   const success = useCallback(
     (msg: string) => {
@@ -111,6 +113,22 @@ export const useVoice = () => {
             }
           );
           break;
+        case Intents.GO_TO:
+          if (program) {
+            goTo(program, inference.payload.type, inference.payload.place);
+            success(
+              `Going to ${inference.payload.type} ${
+                inference.payload.place + 1
+              }`
+            );
+          } else {
+            addMessage({
+              level: 'warning',
+              message: 'Program not yet loaded',
+              timeout: DEFAULT_TIMEOUT,
+            });
+          }
+          break;
         default:
           addMessage({
             level: 'warning',
@@ -122,6 +140,7 @@ export const useVoice = () => {
     },
     [
       addMessage,
+      goTo,
       logReps,
       nextSet,
       program,

@@ -107,7 +107,7 @@ const createGoTo: InferenceCreator<GoToInference | null> = (inference) => {
   return {
     intent: Intents.GO_TO,
     payload: {
-      place,
+      place: place - 1,
       type: inference.slots.type as JumpTypes,
     },
   };
