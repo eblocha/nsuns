@@ -69,6 +69,13 @@ export const useStore = create<Store>(
           state.setActiveLift(lift);
           state.setActiveSet(set);
         },
+        startToday: () => {
+          set({
+            activeLift: 0,
+            activeSet: 0,
+            day: today(),
+          });
+        },
       };
     },
     {

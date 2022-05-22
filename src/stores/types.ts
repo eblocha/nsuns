@@ -41,4 +41,5 @@ export type Store = {
   // Voice control -------------------------------------------------------------
   nextSet: (program: Program) => void;
   goTo: (program: Program, type: JumpTypes, index: number) => void;
+  startToday: () => void;
 };

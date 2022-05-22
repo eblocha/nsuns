@@ -12,6 +12,7 @@ import { useUpdate } from './useUpdate';
 const selectAddMessage = (state: Store) => state.addMessage;
 const selectNextSet = (state: Store) => state.nextSet;
 const selectGoTo = (state: Store) => state.goTo;
+const selectStartToday = (state: Store) => state.startToday;
 
 const DEFAULT_TIMEOUT = 5000;
 
@@ -31,6 +32,7 @@ export const useVoice = () => {
   const undoUpdate = useUndoUpdate();
   const { mutate: updateReps } = useUpdateReps(profile);
   const goTo = useStore(selectGoTo);
+  const startToday = useStore(selectStartToday);
 
   const success = useCallback(
     (msg: string) => {
@@ -129,6 +131,10 @@ export const useVoice = () => {
             });
           }
           break;
+        case Intents.START_WORKOUT:
+          startToday();
+          success('Starting workout');
+          break;
         default:
           addMessage({
             level: 'warning',
@@ -144,6 +150,7 @@ export const useVoice = () => {
       logReps,
       nextSet,
       program,
+      startToday,
       success,
       undoUpdate,
       updateReps,
