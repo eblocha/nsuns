@@ -82,12 +82,13 @@ export const useVoice = () => {
                   `Logging ${inference.payload.reps} reps for ${inference.payload.type}`
                 );
               },
-              onError: () => {
+              onError: (error) => {
                 addMessage({
                   level: 'error',
                   message: 'Failed to log reps',
                   timeout: DEFAULT_TIMEOUT,
                 });
+                console.error(error);
               },
             }
           );
@@ -105,12 +106,13 @@ export const useVoice = () => {
             { replace: true, reps: {} },
             {
               onSuccess: () => success('Reset reps'),
-              onError: () => {
+              onError: (error) => {
                 addMessage({
                   level: 'error',
                   message: 'Failed to reset reps',
                   timeout: DEFAULT_TIMEOUT,
                 });
+                console.error(error);
               },
             }
           );
