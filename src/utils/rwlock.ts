@@ -12,10 +12,11 @@ const asyncNOP = async () => new Promise<void>((resolve) => resolve());
 export class RWLock {
   protected readersLock: Mutex = new Mutex();
   protected writersLock: Mutex = new Mutex();
+  // eslint-disable-next-line @typescript-eslint/no-empty-function
   protected readersRelease: MutexInterface.Releaser = () => {};
-  protected readerCountBlocked: number = 0;
-  protected _readerCount: number = 0;
-  protected _writerCount: number = 0;
+  protected readerCountBlocked = 0;
+  protected _readerCount = 0;
+  protected _writerCount = 0;
 
   public get readerCount(): number {
     return this._readerCount + this.readerCountBlocked;
