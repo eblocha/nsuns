@@ -1,10 +1,13 @@
 import { useCallback } from 'react';
 import { Maxes, Reps } from '../api';
+import { Store, useStore } from '../stores';
 import { calculateUpdate } from '../utils/maxes';
 import useMaxes, { useAddMaxes } from './useMaxes';
 import useProfile from './useProfile';
 import useReps, { useAddReps } from './useReps';
 import useUnits from './useUnits';
+
+const selectAddMessage = (state: Store) => state.addMessage;
 
 export const useUpdate = () => {
   const [profile] = useProfile();
@@ -13,6 +16,8 @@ export const useUpdate = () => {
   const { mutate: addReps } = useAddReps(profile);
   const { mutate: addMaxes } = useAddMaxes(profile);
   const [units] = useUnits();
+
+  const addMessage = useStore(selectAddMessage);
 
   const update = useCallback(() => {
     if (reps && maxes) {
@@ -31,10 +36,28 @@ export const useUpdate = () => {
         nextReps[lift] = null;
       }
 
-      addMaxes(nextMaxes);
-      addReps(nextReps);
+      addMaxes(nextMaxes, {
+        onError: (error) => {
+          addMessage({
+            level: 'error',
+            message: 'Failed to update maxes',
+            timeout: 5000,
+          });
+          console.error(error);
+        },
+      });
+      addReps(nextReps, {
+        onError: (error) => {
+          addMessage({
+            level: 'error',
+            message: 'Failed to update reps',
+            timeout: 5000,
+          });
+          console.error(error);
+        },
+      });
     }
-  }, [addMaxes, addReps, maxes, reps, units]);
+  }, [addMaxes, addMessage, addReps, maxes, reps, units]);
 
   return update;
 };
