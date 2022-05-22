@@ -1,7 +1,13 @@
 import { RhinoInference } from '@picovoice/rhino-web-core';
 import { useCallback } from 'react';
 import useStore, { Store } from '../stores';
-import { Intents, validateInference } from '../voiceControl';
+import { capitalize } from '../utils/string';
+import {
+  ChangeMaxDirections,
+  Intents,
+  validateInference,
+} from '../voiceControl';
+import useMaxes, { useUpdateMaxes } from './useMaxes';
 import useProfile from './useProfile';
 import useProgram from './useProgram';
 import { useUpdateReps } from './useReps';
@@ -24,6 +30,7 @@ export const useVoice = () => {
   const [profile] = useProfile();
 
   const { data: program } = useProgram(profile);
+  const { data: maxes } = useMaxes(profile);
 
   const addMessage = useStore(selectAddMessage);
   const nextSet = useStore(selectNextSet);
@@ -31,6 +38,7 @@ export const useVoice = () => {
   const updateWeights = useUpdate();
   const undoUpdate = useUndoUpdate();
   const { mutate: updateReps } = useUpdateReps(profile);
+  const { mutate: updateMaxes } = useUpdateMaxes(profile);
   const goTo = useStore(selectGoTo);
   const startToday = useStore(selectStartToday);
 
@@ -137,6 +145,50 @@ export const useVoice = () => {
           startToday();
           success('Starting workout');
           break;
+        case Intents.CHANGE_MAX: {
+          const { weight, direction, type } = inference.payload;
+          if (maxes && maxes.length) {
+            const current = { ...maxes[maxes.length - 1] };
+            if (type in current) {
+              if (direction === ChangeMaxDirections.INCREASE) {
+                current[type] += weight;
+              } else {
+                current[type] -= weight;
+              }
+            } else {
+              addMessage({
+                level: 'warning',
+                message: `${type} not in maxes`,
+                timeout: DEFAULT_TIMEOUT,
+              });
+              return;
+            }
+            updateMaxes(
+              {
+                maxes: current,
+              },
+              {
+                onSuccess: () =>
+                  success(`${capitalize(direction)} ${type} by ${weight}`),
+                onError: (error) => {
+                  addMessage({
+                    level: 'error',
+                    message: 'Failed to change max',
+                    timeout: DEFAULT_TIMEOUT,
+                  });
+                  console.error(error);
+                },
+              }
+            );
+          } else {
+            addMessage({
+              level: 'warning',
+              message: 'Maxes not loaded or no maxes saved',
+              timeout: DEFAULT_TIMEOUT,
+            });
+          }
+          break;
+        }
         default:
           addMessage({
             level: 'warning',
@@ -150,11 +202,13 @@ export const useVoice = () => {
       addMessage,
       goTo,
       logReps,
+      maxes,
       nextSet,
       program,
       startToday,
       success,
       undoUpdate,
+      updateMaxes,
       updateReps,
       updateWeights,
     ]
