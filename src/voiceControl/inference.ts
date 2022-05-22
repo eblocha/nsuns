@@ -164,7 +164,7 @@ const createChangeUser: InferenceCreator<ChangeUserInference | null> = (
 
   return {
     intent: Intents.CHANGE_USER,
-    payload: { user },
+    payload: { user: user - 1 },
   };
 };
 
