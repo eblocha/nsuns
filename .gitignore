@@ -6,3 +6,4 @@ dist-ssr
 .vscode
 /models
 /coverage
+.vercel
