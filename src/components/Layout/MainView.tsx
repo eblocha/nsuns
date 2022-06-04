@@ -2,8 +2,6 @@ import MaxStats from '../Stat/MaxStats';
 import RepStats from '../Stat/RepStats';
 import { Toolbar } from '../Tools/Toolbar';
 import { Update } from '../Tools/Update/Update';
-import Profile from '../Tools/Profile/Profile';
-import Settings from '../Tools/Settings/Settings';
 import Undo from '../Tools/Undo/Undo';
 import NextSet from '../Tools/NextSet/NextSet';
 import Edit from '../Tools/Edit/Edit';
@@ -25,8 +23,6 @@ const MainView = () => {
             <NextSet />
           </Toolbar>
           <Toolbar>
-            <Profile />
-            <Settings />
             <Edit />
           </Toolbar>
         </div>
