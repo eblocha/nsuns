@@ -56,6 +56,7 @@ const Stat = ({ onEdit, ...props }: IProps) => {
         <form onSubmit={handleSubmit}>
           <input
             className="w-full h-full overflow-hidden py-3 bg-transparent text-center"
+            placeholder="Edit"
             value={value}
             onChange={onChange}
             onBlur={handleBlur}
