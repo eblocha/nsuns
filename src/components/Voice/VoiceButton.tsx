@@ -1,5 +1,5 @@
 import { PicovoiceWorkerFactory } from '@picovoice/picovoice-web-en-worker';
-import { usePicovoice } from '@picovoice/picovoice-web-react';
+import { usePicovoice } from '../../hooks/usePicovoice';
 
 import { useCallback, useState } from 'react';
 import { FaMicrophoneAlt, FaSpinner } from 'react-icons/fa';
