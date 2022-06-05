@@ -24,6 +24,7 @@ export enum LiftTypes {
   PRESS = 'press',
   SQUAT = 'squat',
   DEADLIFT = 'deadlift',
+  ROW = 'row',
 }
 
 export type LogRepsSlots = {
