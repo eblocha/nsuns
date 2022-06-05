@@ -11,8 +11,8 @@ const MainView = () => {
   return (
     <div className="w-full h-full overflow-hidden grid grid-cols-3 gap-2 p-5">
       <DayColumn />
-      <div className="col-span-2 flex flex-col">
-        <div className="grid grid-cols-2 gap-2 grow">
+      <div className="col-span-2 flex flex-col overflow-hidden">
+        <div className="grid grid-cols-2 gap-2 grow overflow-auto">
           <MaxStats />
           <RepStats />
         </div>
