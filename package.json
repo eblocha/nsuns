@@ -17,7 +17,7 @@
   },
   "dependencies": {
     "@picovoice/picovoice-web-en-worker": "^2.1.4",
-    "@picovoice/picovoice-web-react": "^2.1.4",
+    "@picovoice/porcupine-web-core": "^2.1.0",
     "@picovoice/rhino-web-core": "^2.1.0",
     "@picovoice/web-voice-processor": "^2.2.2",
     "ajv": "^8.11.0",

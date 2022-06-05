@@ -1458,7 +1458,7 @@
     "@nodelib/fs.scandir" "2.1.5"
     fastq "^1.6.0"
 
-"@picovoice/picovoice-web-core@2.1.0", "@picovoice/picovoice-web-core@^2.1.0":
+"@picovoice/picovoice-web-core@2.1.0":
   version "2.1.0"
   resolved "https://registry.yarnpkg.com/@picovoice/picovoice-web-core/-/picovoice-web-core-2.1.0.tgz#474d51548ab4c609a7d7412d870928fae4073f63"
   integrity sha512-r85J5hCf6STRLdq0MukHimuR3a/748hYVLzmq9X8j5vmgUTU1MB6094Mq4yvYMZYrzUmUMINDBiApWtzmtiBOg==
@@ -1474,13 +1474,6 @@
     "@picovoice/picovoice-web-core" "2.1.0"
     "@picovoice/porcupine-web-en-factory" "2.1.5"
     "@picovoice/rhino-web-en-factory" "2.1.3"
-
-"@picovoice/picovoice-web-react@^2.1.4":
-  version "2.1.4"
-  resolved "https://registry.yarnpkg.com/@picovoice/picovoice-web-react/-/picovoice-web-react-2.1.4.tgz#c7facd55b662ab10af7ec7bc64af65c24dfd0200"
-  integrity sha512-tdi6cJOB6NggM6sytFGXGb/uUXvkIh0bSJOl0kAOOWYXAhnRsaIAmxWdMvBBAvoPwSoe3sHfnO1z41qjt2xrdg==
-  dependencies:
-    "@picovoice/picovoice-web-core" "^2.1.0"
 
 "@picovoice/porcupine-web-core@^2.1.0":
   version "2.1.0"
