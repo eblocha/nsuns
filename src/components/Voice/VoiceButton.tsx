@@ -1,7 +1,7 @@
 import { PicovoiceWorkerFactory } from '@picovoice/picovoice-web-en-worker';
 import { usePicovoice } from '../../hooks/usePicovoice';
 
-import { useCallback, useState } from 'react';
+import { useCallback, useMemo, useState } from 'react';
 import { FaMicrophoneAlt, FaSpinner } from 'react-icons/fa';
 import { useVoice } from '../../hooks/useVoice';
 
@@ -29,9 +29,8 @@ const PersonalVoiceButton = ({
 
   const inferenceEventHandler = useVoice();
 
-  const { isLoaded, isListening, start, stop, engine } = usePicovoice(
-    PicovoiceWorkerFactory,
-    {
+  const picovoiceArgs = useMemo(
+    () => ({
       accessKey,
       porcupineKeyword: {
         base64: keywordModel,
@@ -39,7 +38,13 @@ const PersonalVoiceButton = ({
       },
       rhinoContext: { base64: intentModel },
       start: true,
-    },
+    }),
+    [accessKey, intentModel, keywordModel, keywordName]
+  );
+
+  const { isLoaded, isListening, start, stop, engine } = usePicovoice(
+    PicovoiceWorkerFactory,
+    picovoiceArgs,
     noOp,
     inferenceEventHandler
   );
