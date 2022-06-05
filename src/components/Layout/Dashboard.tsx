@@ -11,7 +11,7 @@ const Dashboard = () => {
         <TopInfo />
         <VoiceButton />
       </div>
-      <div className="grow">
+      <div className="grow overflow-hidden">
         <MainView />
       </div>
       <MessageList />
