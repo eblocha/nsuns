@@ -1,9 +1,7 @@
-/* eslint-disable react-hooks/exhaustive-deps */
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 /**
- * This is a modified version of the official picovoice hook, fixing a horrible bug
+ * This is a modified version of the official picovoice hook
  */
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 
 import { WebVoiceProcessor } from '@picovoice/web-voice-processor';
 
@@ -25,14 +23,7 @@ export type PicovoiceHookArgs = {
   start?: boolean;
 };
 
-type EngineControlType = 'ppn' | 'rhn';
-
-export function usePicovoice(
-  picovoiceWorkerFactory: PicovoiceWorkerFactory | null,
-  picovoiceHookArgs: PicovoiceHookArgs | null,
-  keywordCallback: (keywordLabel: string) => void,
-  inferenceCallback: (inference: RhinoInference) => void
-): {
+export type PicovoiceReturnValue = {
   contextInfo: string | null;
   isLoaded: boolean;
   isListening: boolean;
@@ -43,7 +34,16 @@ export function usePicovoice(
   start: () => void;
   pause: () => void;
   stop: () => void;
-} {
+};
+
+type EngineControlType = 'ppn' | 'rhn';
+
+export function usePicovoice(
+  picovoiceWorkerFactory: PicovoiceWorkerFactory,
+  picovoiceHookArgs: PicovoiceHookArgs,
+  keywordCallback: (keywordLabel: string) => void,
+  inferenceCallback: (inference: RhinoInference) => void
+): PicovoiceReturnValue {
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [contextInfo, setContextInfo] = useState<string | null>(null);
   const [isError, setIsError] = useState<boolean | null>(false);
@@ -54,10 +54,8 @@ export function usePicovoice(
     useState<PicovoiceWorker | null>(null);
   const [webVoiceProcessor, setWebVoiceProcessor] =
     useState<WebVoiceProcessor | null>(null);
-  // const porcupineCallback = useRef(keywordCallback);
-  // const rhinoCallback = useRef(inferenceCallback);
 
-  const start = (): boolean => {
+  const start = useCallback(() => {
     if (webVoiceProcessor !== null) {
       webVoiceProcessor.start().then(() => {
         setIsListening(true);
@@ -65,18 +63,18 @@ export function usePicovoice(
       });
     }
     return false;
-  };
+  }, [webVoiceProcessor]);
 
-  const pause = (): boolean => {
+  const pause = useCallback(() => {
     if (webVoiceProcessor !== null) {
       webVoiceProcessor.pause();
       setIsListening(false);
       return true;
     }
     return false;
-  };
+  }, [webVoiceProcessor]);
 
-  const stop = (): boolean => {
+  const stop = useCallback(() => {
     if (webVoiceProcessor !== null) {
       webVoiceProcessor.stop().then(() => {
         setIsListening(false);
@@ -88,7 +86,7 @@ export function usePicovoice(
       });
     }
     return false;
-  };
+  }, [picovoiceWorker, webVoiceProcessor]);
 
   /** Refresh the keyword and inference callbacks
    * when they change (avoid stale closure) */
@@ -96,7 +94,7 @@ export function usePicovoice(
     if (picovoiceWorker !== null) {
       picovoiceWorker.onmessage = (
         message: MessageEvent<PicovoiceWorkerResponse>
-      ): void => {
+      ) => {
         switch (message.data.command) {
           case 'ppn-keyword':
             keywordCallback(message.data.keywordLabel);
@@ -117,38 +115,14 @@ export function usePicovoice(
   }, [inferenceCallback, keywordCallback, picovoiceWorker]);
 
   useEffect(() => {
-    if (
-      picovoiceWorkerFactory === null ||
-      picovoiceWorkerFactory === undefined
-    ) {
-      return (): void => {
-        /* NOOP */
-      };
-    }
-
-    if (picovoiceHookArgs === null || picovoiceHookArgs === undefined) {
-      return (): void => {
-        /* NOOP */
-      };
-    }
-
     async function startPicovoice(): Promise<{
       webVp: WebVoiceProcessor;
       pvWorker: PicovoiceWorker;
     }> {
-      const { start: startWebVp = true } = picovoiceHookArgs!;
+      const { start: startWebVp = true } = picovoiceHookArgs;
 
-      // Argument checking; the engines will also do checking but we can get
-      // clearer error messages from the hook
-      if (picovoiceHookArgs!.porcupineKeyword === undefined) {
-        throw Error('porcupineKeyword is missing');
-      }
-      if (picovoiceHookArgs!.rhinoContext === undefined) {
-        throw Error('rhinoContext is missing');
-      }
-
-      const pvWorker: PicovoiceWorker = await picovoiceWorkerFactory!.create({
-        ...picovoiceHookArgs!,
+      const pvWorker: PicovoiceWorker = await picovoiceWorkerFactory.create({
+        ...picovoiceHookArgs,
         start: true,
       });
 
@@ -166,6 +140,7 @@ export function usePicovoice(
         throw error;
       }
     }
+
     const startPicovoicePromise = startPicovoice();
 
     startPicovoicePromise
@@ -196,14 +171,7 @@ export function usePicovoice(
           // do nothing
         });
     };
-  }, [
-    picovoiceWorkerFactory,
-    // https://github.com/facebook/react/issues/14476#issuecomment-471199055
-    // ".... we know our data structure is relatively shallow, doesn't have cycles,
-    // and is easily serializable ... doesn't have functions or weird objects like Dates.
-    // ... it's acceptable to pass [JSON.stringify(variables)] as a dependency."
-    JSON.stringify(picovoiceHookArgs),
-  ]);
+  }, [picovoiceHookArgs, picovoiceWorkerFactory]);
 
   return {
     contextInfo,
