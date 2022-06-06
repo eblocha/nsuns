@@ -33,7 +33,9 @@ export const flatten = (
   for (const checkpoint of history) {
     for (const [key, value] of Object.entries(data)) {
       const val = checkpoint[key];
-      value.history?.push(val ?? 0);
+      if (val !== undefined) {
+        value.history?.push(val ?? 0);
+      }
     }
   }
 

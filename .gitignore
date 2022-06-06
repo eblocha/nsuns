@@ -7,3 +7,4 @@ dist-ssr
 /models
 /coverage
 .vercel
+/scripts/deploy.sh
