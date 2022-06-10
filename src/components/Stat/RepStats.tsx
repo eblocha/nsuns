@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import useProfile from '../../hooks/useProfile';
 import useProgram from '../../hooks/useProgram';
 import useReps, { useUpdateReps } from '../../hooks/useReps';
-import { flattenHistory } from '../../utils/maxes';
+import { flattenHistory } from '../../utils/program';
 import StatList from './StatList';
 
 const RepStats = () => {

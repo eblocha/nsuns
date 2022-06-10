@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import useMaxes, { useUpdateMaxes } from '../../hooks/useMaxes';
 import useProfile from '../../hooks/useProfile';
 import useProgram from '../../hooks/useProgram';
-import { flattenHistory } from '../../utils/maxes';
+import { flattenHistory } from '../../utils/program';
 import StatList from './StatList';
 
 const MaxStats = () => {
