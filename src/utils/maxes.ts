@@ -11,7 +11,7 @@ export const calculateUpdate = (reps: number | null, units: Units) => {
   return units === Units.LB ? 15 : 7.5;
 };
 
-export const flatten = (
+export const flattenHistory = (
   program: Program,
   history: Record<string, number | null>[]
 ): DataWithHistory[] => {

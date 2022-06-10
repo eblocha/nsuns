@@ -2,7 +2,7 @@ import { useCallback, useMemo } from 'react';
 import useProfile from '../../hooks/useProfile';
 import useProgram from '../../hooks/useProgram';
 import useReps, { useUpdateReps } from '../../hooks/useReps';
-import { flatten } from '../../utils/maxes';
+import { flattenHistory } from '../../utils/maxes';
 import StatList from './StatList';
 
 const RepStats = () => {
@@ -11,7 +11,7 @@ const RepStats = () => {
   const { data: program } = useProgram(profile);
 
   const flattened = useMemo(() => {
-    return reps && program ? flatten(program, reps) : [];
+    return reps && program ? flattenHistory(program, reps) : [];
   }, [program, reps]);
 
   const { mutate } = useUpdateReps(profile);
