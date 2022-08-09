@@ -1,5 +1,4 @@
 import { RhinoInference } from '@picovoice/rhino-web-core';
-import { capitalize } from '../utils/string';
 import {
   AppInference,
   ChangeMaxDirections,
@@ -221,43 +220,4 @@ export const validateInference = (
   }
 
   return null;
-};
-
-// Report ---------------------------------------------------------------------
-export const reportInference = (inference: AppInference | null): string => {
-  if (!inference) return "I didn't understand";
-  switch (inference.intent) {
-    case Intents.NEXT_SET:
-      return 'Next set';
-    case Intents.LOG_REPS:
-      return `Logging ${inference.payload.reps} reps for ${inference.payload.type}`;
-    case Intents.UPDATE_WEIGHTS:
-      return 'Updating weights';
-    case Intents.UNDO_UPDATE:
-      return 'Undoing update';
-    case Intents.EXIT_WORKOUT:
-      return 'Stopping workout';
-    case Intents.RESET_REPS:
-      return 'Resetting reps';
-    case Intents.STATUS:
-      return 'Toggling stats';
-    case Intents.GO_TO:
-      return `Going to ${inference.payload.type} ${inference.payload.place}`;
-    case Intents.START_WORKOUT:
-      return 'Starting workout';
-    case Intents.CHANGE_MAX:
-      return `${capitalize(inference.payload.direction)} ${
-        inference.payload.type
-      } by ${inference.payload.weight}`;
-    case Intents.CHANGE_USER:
-      return `Switching to user ${inference.payload.user}`;
-    case Intents.HOW_ARE_YOU:
-      return `I am trapped in here by you!`;
-    case Intents.TELL_JOKE:
-      return 'No';
-    case Intents.SIGNIFICANT_OTHER:
-      return 'No';
-  }
-
-  return "I didn't understand";
 };

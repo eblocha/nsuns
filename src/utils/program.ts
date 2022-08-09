@@ -7,9 +7,11 @@ import {
   Maxes,
   Program,
   Units,
+  DataWithHistory,
 } from '../api';
 import { getDayString } from './days';
 import { roundWeight } from './weight';
+import { capitalize } from './string';
 
 export const currentDay = (program: Program, day: number) => {
   const dayString = getDayString(day);
@@ -168,4 +170,44 @@ export const displayArbitrarySet = ({
       return fullName(currLift, setForDisplay, includeName);
     }
   }
+};
+
+export const flattenHistory = (
+  program: Program,
+  history: Record<string, number | null>[]
+): DataWithHistory[] => {
+  const data: Record<string, DataWithHistory> = {};
+
+  for (const day of Object.values(program)) {
+    for (const lift of day) {
+      if (lift.type === LiftTypes.MAIN && !(lift.base in data)) {
+        data[lift.base] = {
+          title: capitalize(lift.base),
+          value: '',
+          id: lift.base,
+          history: [],
+        };
+      }
+    }
+  }
+
+  for (const checkpoint of history) {
+    for (const [key, value] of Object.entries(data)) {
+      const val = checkpoint[key];
+      if (val !== undefined) {
+        value.history?.push(val ?? 0);
+      }
+    }
+  }
+
+  if (history.length) {
+    const lastValue = history[history.length - 1];
+    for (const [key, value] of Object.entries(lastValue)) {
+      if (key in data) {
+        data[key].value = value ?? '';
+      }
+    }
+  }
+
+  return Object.values(data);
 };

@@ -3,7 +3,7 @@ import { useMemo } from 'react';
 import useMaxes, { useUpdateMaxes } from '../../hooks/useMaxes';
 import useProfile from '../../hooks/useProfile';
 import useProgram from '../../hooks/useProgram';
-import { flatten } from '../../utils/maxes';
+import { flattenHistory } from '../../utils/program';
 import StatList from './StatList';
 
 const MaxStats = () => {
@@ -12,7 +12,7 @@ const MaxStats = () => {
   const { data: program } = useProgram(profile);
 
   const flattened = useMemo(() => {
-    return maxes && program ? flatten(program, maxes) : [];
+    return maxes && program ? flattenHistory(program, maxes) : [];
   }, [maxes, program]);
 
   const { mutate } = useUpdateMaxes(profile);
