@@ -1,3 +1,4 @@
+import { withPermissions } from 'composable-locks';
 import { createApi, lock } from './client';
 import { Maxes, Keys } from './types';
 
@@ -9,26 +10,27 @@ export const createDefaultMaxes = (): Maxes => ({
 });
 
 /** Get the list of all max history for `profile` */
-export const getMaxes = async (profile: string) => {
+export const getMaxes = (profile: string) => {
   const api = createApi(profile);
-  return await lock.withShareable<Maxes[]>(Keys.MAXES, async () => {
-    return (await api.getItem(Keys.MAXES)) || [];
-  });
+  return withPermissions(
+    [lock.acquire('read', Keys.MAXES)],
+    async () => (await api.getItem<Maxes[]>(Keys.MAXES)) || []
+  );
 };
 
 /** Set the maxes to a specific value */
-export const setMaxes = async (profile: string, maxes: Maxes[]) => {
+export const setMaxes = (profile: string, maxes: Maxes[]) => {
   const api = createApi(profile);
-  await lock.withShareable(Keys.MAXES, async () => {
+  return withPermissions([lock.acquire('write', Keys.MAXES)], async () => {
     await api.setItem(Keys.MAXES, maxes);
+    return maxes;
   });
-  return maxes;
 };
 
 /** Add a new max entry to `profile` */
-export const addMaxes = async (profile: string, maxes: Maxes) => {
+export const addMaxes = (profile: string, maxes: Maxes) => {
   const api = createApi(profile);
-  return await lock.withExclusive(Keys.MAXES, async () => {
+  return withPermissions([lock.acquire('write', Keys.MAXES)], async () => {
     const current = (await api.getItem<Maxes[]>(Keys.MAXES)) || [];
     current.push(maxes);
     await api.setItem(Keys.MAXES, current);
@@ -37,13 +39,9 @@ export const addMaxes = async (profile: string, maxes: Maxes) => {
 };
 
 /** Update the latest max entry for `profile` */
-export const updateMaxes = async (
-  profile: string,
-  maxes: Maxes,
-  replace = false
-) => {
+export const updateMaxes = (profile: string, maxes: Maxes, replace = false) => {
   const api = createApi(profile);
-  return await lock.withExclusive(Keys.MAXES, async () => {
+  return withPermissions([lock.acquire('write', Keys.MAXES)], async () => {
     let current = (await api.getItem<Maxes[]>(Keys.MAXES)) || [];
     if (!current.length) {
       current = [maxes];
@@ -61,9 +59,9 @@ export const updateMaxes = async (
 };
 
 /** Delete the last max entry for `profile` */
-export const deleteMaxes = async (profile: string) => {
+export const deleteMaxes = (profile: string) => {
   const api = createApi(profile);
-  return await lock.withExclusive(Keys.MAXES, async () => {
+  return withPermissions([lock.acquire('write', Keys.MAXES)], async () => {
     const current = (await api.getItem<Maxes[]>(Keys.MAXES)) || [];
     if (!current.length) return current;
 

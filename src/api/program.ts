@@ -1,15 +1,16 @@
 import { Program, Keys, LiftTypes } from './types';
 import { createApi, lock } from './client';
+import { withPermissions } from 'composable-locks';
 
 /**
  * Get the user's program
  * @param profile The user profile
  * @returns The user's program
  */
-export const getProgram = async (profile: string) => {
+export const getProgram = (profile: string) => {
   const api = createApi(profile);
-  return await lock.withShareable<Program>(
-    Keys.PROGRAM,
+  return withPermissions(
+    [lock.acquire('read', Keys.PROGRAM)],
     async () =>
       (await api.getItem<Program>(Keys.PROGRAM)) || createDefaultProgram()
   );
@@ -23,7 +24,7 @@ export const getProgram = async (profile: string) => {
  */
 export const setProgram = async (profile: string, program: Program) => {
   const api = createApi(profile);
-  await lock.withExclusive(Keys.PROGRAM, async () => {
+  await withPermissions([lock.acquire('write', Keys.PROGRAM)], async () => {
     await api.setItem(Keys.PROGRAM, program);
   });
   return program;
